@@ -3,8 +3,8 @@ from simulation import Simulation, get_statess
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-simulation = Simulation()
-simulation.start()
+#simulation = Simulation()
+#simulation.start()
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,5 +1,5 @@
 def get_statess():
-        return[{"id": 1, "x": 100, "y": 150}, {"id": 2, "x": 300, "y": 250}]
+        return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
         #return [{ "name": a.name, "state": a.state } for a in self.agents]
 
 class Simulation:
