@@ -1,9 +1,85 @@
-def get_statess():
-        return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
-        #return [{ "name": a.name, "state": a.state } for a in self.agents]
+import math
+import threading
+import time
+from behavioralflow.core import Aprendente
 
-class Simulation:
-    # Retorna o JSON com todos os dados a serem desenhados no canvaJS
-    def get_states(self):
-        return[{"id": 1, "x": 100, "y": 150}, {"id": 2, "x": 300, "y": 250}]
-        #return [{ "name": a.name, "state": a.state } for a in self.agents]
+PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
+
+responses = {("frente",):[5,6],
+             ("tras",):[5,6],
+             ("esq",):[5,6],
+             ("dir",):[5,6],
+             ("parado",):[0,3]}
+
+class Agents(Aprendente):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0):
+        super().__init__(acoes, variar, prob_variacao)
+        self.positionX = positionX
+        self.positionY = positionY
+        self.angle = angle
+        self.passos_restantes = 0
+    
+    def to_respond(self):
+        if self.passos_restantes == 0:
+            self.proxima_acao(("sem contexto",))
+
+        # Executa a ação atual
+        if self.acao_atual == "frente":
+            dx, dy = self._direction_vector()
+            self.positionX += dx
+            self.positionY += dy
+        
+        elif self.acao_atual == "tras":
+            dx, dy = self._direction_vector()
+            self.positionX -= dx
+            self.positionY -= dy
+        
+        elif self.acao_atual == "esq":
+            self.angle = (self.angle - 90) % 360
+        
+        elif self.acao_atual == "dir":
+            self.angle = (self.angle + 90) % 360
+        
+        elif self.acao_atual == "parado":
+            self.positionX += 0
+            self.positionY += 0
+        
+        #diminui um passo
+        self.passos_restantes -= 1
+    
+    def _direction_vector(self):
+        # Retorna o vetor unitário da direção baseada no ângulo
+        radians = math.radians(self.angle)
+        dx = round(math.cos(radians))
+        dy = round(-math.sin(radians))  # y invertido para "cima"
+        return dx, dy
+    
+    # Facilita transformar as informações em dicionário para passar para get_statess()
+    def to_dict(self):
+        return {
+            "positionX": self.positionX,
+            "positionY": self.positionY,
+            "angle": self.angle # ou outro atributo que você queira mostrar
+        }
+
+
+agents = [
+    Agents(responses, prob_variacao=0.0, positionX=50, positionY=50),
+    Agents(responses, prob_variacao=0.0, positionX=150, positionY=50),
+]
+
+
+# Loop de simulação
+def simular_em_loop():
+    while True:
+        for agent in agents:
+            agent.proxima_acao()
+        time.sleep(1/PASSOS_POR_SEGUNDO)  # 50ms por passo
+
+# Iniciar thread do loop
+threading.Thread(target=simular_em_loop, daemon=True).start()
+
+# Retorna o JSON com todos os dados a serem desenhados no canvaJS
+def get_states():
+    return [agente.to_dict() for agente in agents]
+    #return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
