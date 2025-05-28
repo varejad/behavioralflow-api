@@ -5,10 +5,10 @@ from behavioralflow.core import Aprendente
 
 PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 
-responses = {("frente",):[5,6],
+responses = {("frente",):[0,6],
              ("tras",):[5,6],
              ("esq",):[5,6],
-             ("dir",):[5,6],
+             ("dir",):[0,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
@@ -59,7 +59,9 @@ class Agents(Aprendente):
         return {
             "positionX": self.positionX,
             "positionY": self.positionY,
-            "angle": self.angle # ou outro atributo que você queira mostrar
+            "angle": self.angle,
+            "ação atual": self._acao_atual,
+            "antecedente": self.antecedente_atual # ou outro atributo que você queira mostrar
         }
 
 
