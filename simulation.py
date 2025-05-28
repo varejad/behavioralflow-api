@@ -24,23 +24,23 @@ class Agents(Aprendente):
             self.proxima_acao(("sem contexto",))
 
         # Executa a ação atual
-        if self.acao_atual == "frente":
+        if self._acao_atual == "frente":
             dx, dy = self._direction_vector()
             self.positionX += dx
             self.positionY += dy
         
-        elif self.acao_atual == "tras":
+        elif self._acao_atual == "tras":
             dx, dy = self._direction_vector()
             self.positionX -= dx
             self.positionY -= dy
         
-        elif self.acao_atual == "esq":
+        elif self._acao_atual == "esq":
             self.angle = (self.angle - 90) % 360
         
-        elif self.acao_atual == "dir":
+        elif self._acao_atual == "dir":
             self.angle = (self.angle + 90) % 360
         
-        elif self.acao_atual == "parado":
+        elif self._acao_atual == "parado":
             self.positionX += 0
             self.positionY += 0
         
