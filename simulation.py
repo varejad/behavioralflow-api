@@ -24,27 +24,27 @@ class Agents(Aprendente):
             self.proxima_acao(("sem contexto",))
 
         # Executa a ação atual
-        if self._acao_atual == "frente":
+        if self._acao_atual[0] == "frente":
             dx, dy = self._direction_vector()
             self.positionX += dx
             self.positionY += dy
         
-        elif self._acao_atual == "tras":
+        elif self._acao_atual[0] == "tras":
             dx, dy = self._direction_vector()
             self.positionX -= dx
             self.positionY -= dy
         
-        elif self._acao_atual == "esq":
+        elif self._acao_atual[0] == "esq":
             self.angle = (self.angle - 90) % 360
         
-        elif self._acao_atual == "dir":
+        elif self._acao_atual[0] == "dir":
             self.angle = (self.angle + 90) % 360
         
-        elif self._acao_atual == "parado":
+        elif self._acao_atual[0] == "parado":
             self.positionX += 0
             self.positionY += 0
         
-        #diminui um passo
+        #diminue um passo
         self.passos_restantes -= 1
     
     def _direction_vector(self):
@@ -61,7 +61,8 @@ class Agents(Aprendente):
             "positionY": self.positionY,
             "angle": self.angle,
             "ação atual": self._acao_atual,
-            "antecedente": self.antecedente_atual # ou outro atributo que você queira mostrar
+            "antecedente": self.antecedente_atual,
+            "passo": self.passos_restantes #ACABEI DE ADICIONAR ESSE
         }
 
 
