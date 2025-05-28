@@ -73,7 +73,7 @@ agents = [
 def simular_em_loop():
     while True:
         for agent in agents:
-            agent.proxima_acao()
+            agent.to_respond()
         time.sleep(1/PASSOS_POR_SEGUNDO)  # 50ms por passo
 
 # Iniciar thread do loop
@@ -81,5 +81,5 @@ threading.Thread(target=simular_em_loop, daemon=True).start()
 
 # Retorna o JSON com todos os dados a serem desenhados no canvaJS
 def get_states():
-    return [agente.to_dict() for agente in agents]
+    return [agent.to_dict() for agent in agents]
     #return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
