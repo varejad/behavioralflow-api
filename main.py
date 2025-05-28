@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from simulation import Simulation
+from simulation import Simulation, get_statess
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -15,7 +15,11 @@ app.add_middleware(
 
 @app.get("/estate")
 def get_estado():
-    return simulation.get_states()
+    return get_statess()
+
+"""@app.get("/estate")
+def get_estado():
+    return simulation.get_states()"""
 
 @app.get("/")
 def read_root():
