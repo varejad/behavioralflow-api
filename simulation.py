@@ -22,6 +22,7 @@ class Agents(Aprendente):
     def to_respond(self):
         if self.passos_restantes == 0:
             self.proxima_acao(("sem contexto",))
+            self.passos_restantes = PASSOS_POR_SEGUNDO
 
         # Executa a ação atual
         if self._acao_atual[0] == "frente":
