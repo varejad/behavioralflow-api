@@ -39,10 +39,10 @@ class Agents(Aprendente):
             self.positionY = (self.positionY - dy) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
-            self.angle = (self.angle - 90) % 360
+            self.angle = (self.angle - (90/PASSOS_POR_SEGUNDO)) % 360 # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
         
         elif self._acao_atual[0] == "dir":
-            self.angle = (self.angle + 90) % 360
+            self.angle = (self.angle + (90/PASSOS_POR_SEGUNDO)) % 360 # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
         
         elif self._acao_atual[0] == "parado":
             self.positionX += 0
