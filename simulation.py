@@ -5,6 +5,9 @@ from behavioralflow.core import Aprendente
 
 PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 
+WIDTH = 600
+HEIGHT = 400
+
 responses = {("frente",):[0,6],
              ("tras",):[5,6],
              ("esq",):[5,6],
@@ -27,13 +30,13 @@ class Agents(Aprendente):
         # Executa a ação atual
         if self._acao_atual[0] == "frente":
             dx, dy = self._direction_vector()
-            self.positionX += dx
-            self.positionY += dy
+            self.positionX = (self.positionX + dx) % WIDTH
+            self.positionY = (self.positionY + dy) % HEIGHT
         
         elif self._acao_atual[0] == "tras":
             dx, dy = self._direction_vector()
-            self.positionX -= dx
-            self.positionY -= dy
+            self.positionX = (self.positionX - dx) % WIDTH
+            self.positionY = (self.positionY - dy) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
             self.angle = (self.angle - 90) % 360
