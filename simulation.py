@@ -9,9 +9,9 @@ WIDTH = 600
 HEIGHT = 400
 
 responses = {("frente",):[3,6],
-             ("tras",):[5,6],
+             ("tras",):[6,6],  # valor alterado para testar direção
              ("esq",):[5,6],
-             ("dir",):[0,6],
+             ("dir",):[5,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
