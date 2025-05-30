@@ -8,20 +8,23 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 600
 HEIGHT = 400
 
-responses = {("frente",):[0,6],
+responses = {("frente",):[3,6],
              ("tras",):[5,6],
              ("esq",):[5,6],
              ("dir",):[0,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
-    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000"):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
         self.angle = angle
         self.passos_restantes = 0
+        self.color = color
+        self.triangle_color = "#ffffff"
     
+    # Executa as ações
     def to_respond(self):
         if self.passos_restantes == 0:
             self.proxima_acao(("sem contexto",))
@@ -39,10 +42,10 @@ class Agents(Aprendente):
             self.positionY = (self.positionY - dy) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
-            self.angle = (self.angle - (90/PASSOS_POR_SEGUNDO)) % 360 # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            self.angle = (self.angle - (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
         
         elif self._acao_atual[0] == "dir":
-            self.angle = (self.angle + (90/PASSOS_POR_SEGUNDO)) % 360 # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            self.angle = (self.angle + (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
         
         elif self._acao_atual[0] == "parado":
             self.positionX += 0
@@ -51,13 +54,13 @@ class Agents(Aprendente):
         #diminue um passo
         self.passos_restantes -= 1
     
+    # Calcula a direção (.angle)
     def _direction_vector(self):
-        # Retorna o vetor unitário da direção baseada no ângulo
-        radians = math.radians(self.angle)
-        dx = round(math.cos(radians))
-        dy = round(-math.sin(radians))  # y invertido para "cima"
+        # Retorna o vetor unitário da direção baseada no ângulo (em radianos)
+        dx = round(math.cos(self.angle))
+        dy = round(-math.sin(self.angle))  # y invertido para "cima"
         return dx, dy
-    
+
     # Facilita transformar as informações em dicionário para passar para get_statess()
     def to_dict(self):
         return {
@@ -66,13 +69,14 @@ class Agents(Aprendente):
             "angle": self.angle,
             "ação atual": self._acao_atual,
             "antecedente": self.antecedente_atual,
-            "passo": self.passos_restantes #ACABEI DE ADICIONAR ESSE
+            "color": self.color,
+            "triangle_color": self.triangle_color #ACABEI DE ADICIONAR ESSE
         }
 
-
+# Criando dois agentes
 agents = [
-    Agents(responses, prob_variacao=0.0, positionX=50, positionY=50),
-    Agents(responses, prob_variacao=0.0, positionX=150, positionY=50),
+    Agents(responses, prob_variacao=0.0, positionX=50, positionY=50, color="#5690E6"),
+    Agents(responses, prob_variacao=0.0, positionX=150, positionY=50, color="#B91CBE"),
 ]
 
 
@@ -81,7 +85,7 @@ def simular_em_loop():
     while True:
         for agent in agents:
             agent.to_respond()
-        time.sleep(1/PASSOS_POR_SEGUNDO)  # 50ms por passo
+        time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
 
 # Iniciar thread do loop
 threading.Thread(target=simular_em_loop, daemon=True).start()
