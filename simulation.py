@@ -9,7 +9,7 @@ WIDTH = 600
 HEIGHT = 400
 
 responses = {("cima",):[3,6],
-             ("baixo",):[6,6],  # valor alterado para testar direção
+             ("baixo",):[3,6],
              ("esq",):[5,6],
              ("dir",):[5,6],
              ("parado",):[0,3]}
@@ -35,7 +35,7 @@ class Agents(Aprendente):
             #dx, dy = self._direction_vector()
             #self.positionX = (self.positionX + dx) % WIDTH
             #self.positionY = (self.positionY + dy) % HEIGHT
-            self.positionY -= 1 % HEIGHT
+            self.positionY = (self.positionY - 1) % HEIGHT
         
         elif self._acao_atual[0] == "baixo":
             #dx, dy = self._direction_vector()
