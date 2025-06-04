@@ -8,8 +8,8 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 600
 HEIGHT = 400
 
-responses = {("frente",):[3,6],
-             ("tras",):[6,6],  # valor alterado para testar direção
+responses = {("cima",):[3,6],
+             ("baixo",):[6,6],  # valor alterado para testar direção
              ("esq",):[5,6],
              ("dir",):[5,6],
              ("parado",):[0,3]}
@@ -31,15 +31,17 @@ class Agents(Aprendente):
             self.passos_restantes = PASSOS_POR_SEGUNDO
 
         # Executa a ação atual
-        if self._acao_atual[0] == "frente":
-            dx, dy = self._direction_vector()
-            self.positionX = (self.positionX + dx) % WIDTH
-            self.positionY = (self.positionY + dy) % HEIGHT
+        if self._acao_atual[0] == "cima":
+            #dx, dy = self._direction_vector()
+            #self.positionX = (self.positionX + dx) % WIDTH
+            #self.positionY = (self.positionY + dy) % HEIGHT
+            self.positionY -= 1 % HEIGHT
         
-        elif self._acao_atual[0] == "tras":
-            dx, dy = self._direction_vector()
-            self.positionX = (self.positionX - dx) % WIDTH
-            self.positionY = (self.positionY - dy) % HEIGHT
+        elif self._acao_atual[0] == "baixo":
+            #dx, dy = self._direction_vector()
+            #self.positionX = (self.positionX - dx) % WIDTH
+            #self.positionY = (self.positionY - dy) % HEIGHT
+            self.positionY = (self.positionY + 1) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
             self.angle = (self.angle - (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
