@@ -10,8 +10,8 @@ HEIGHT = 400
 
 responses = {("cima",):[3,6],
              ("baixo",):[3,6],
-             ("esq",):[5,6],
-             ("dir",):[5,6],
+             ("esq",):[3,6],
+             ("dir",):[3,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
@@ -19,10 +19,10 @@ class Agents(Aprendente):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
-        self.angle = angle
+        #self.angle = angle # servia para definir para onde o agente está 'virado'
         self.passos_restantes = 0
         self.color = color
-        self.triangle_color = "#ffffff"
+        self.circle_color = "#ffffff"
     
     # Executa as ações
     def to_respond(self):
@@ -44,10 +44,12 @@ class Agents(Aprendente):
             self.positionY = (self.positionY + 1) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
-            self.angle = (self.angle - (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            #self.angle = (self.angle - (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            self.positionX = (self.positionX + 1) % WIDTH
         
         elif self._acao_atual[0] == "dir":
-            self.angle = (self.angle + (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            #self.angle = (self.angle + (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
+            self.positionX = (self.positionX - 1) % WIDTH
         
         elif self._acao_atual[0] == "parado":
             self.positionX += 0
@@ -57,22 +59,21 @@ class Agents(Aprendente):
         self.passos_restantes -= 1
     
     # Calcula a direção (.angle)
-    def _direction_vector(self):
+    """def _direction_vector(self):
         # Retorna o vetor unitário da direção baseada no ângulo (em radianos)
         dx = round(math.cos(self.angle))
         dy = round(-math.sin(self.angle))  # y invertido para "cima"
-        return dx, dy
+        return dx, dy"""
 
     # Facilita transformar as informações em dicionário para passar para get_statess()
     def to_dict(self):
         return {
             "positionX": self.positionX,
             "positionY": self.positionY,
-            "angle": self.angle,
             "ação atual": self._acao_atual,
             "antecedente": self.antecedente_atual,
             "color": self.color,
-            "triangle_color": self.triangle_color #ACABEI DE ADICIONAR ESSE
+            "circle_color": self.circle_color #ACABEI DE ADICIONAR ESSE
         }
 
 # Criando dois agentes
