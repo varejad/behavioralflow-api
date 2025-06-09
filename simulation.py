@@ -54,6 +54,12 @@ class Agents(Aprendente):
         #diminue um passo
         self.passos_restantes -= 1
     
+    def set_consequence(self):
+        # teste para reforçar quando estiver em um quadrado no meio da tela
+        if self.positionY >= 150 and self.positionY <= 250 and self.positionX >= 250 and self.positionX <= 350:
+            self.reforcar()
+
+    
     # Calcula a direção (.angle)
     """def _direction_vector(self):
         # Retorna o vetor unitário da direção baseada no ângulo (em radianos)
@@ -85,9 +91,7 @@ def simular_em_loop():
         for agent in agents:
             context = agent.set_context()
             agent.to_respond(context)
-            # teste para reforçar quando estiver em um quadrado no meio da tela
-            if agent.positionY >= 150 and agent.positionY <= 250 and agent.positionX >= 250 and agent.positionX <= 350:
-                agent.reforcar(10)
+            agent.set_consequence()
         time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
 
 # Iniciar thread do loop
