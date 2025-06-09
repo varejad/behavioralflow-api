@@ -25,7 +25,7 @@ class Agents(Aprendente):
         self.circle_color = "#ffffff"
     
     def set_context(self):
-        context = ("sem contexto",)
+        context = (self.positionX, self.positionY)
         return context
 
     # Executa as ações
@@ -85,6 +85,9 @@ def simular_em_loop():
         for agent in agents:
             context = agent.set_context()
             agent.to_respond(context)
+            # teste para reforçar quando estiver em um quadrado no meio da tela
+            if agent.positionY >= 150 and agent.positionY <= 250 and agent.positionX >= 250 and agent.positionX <= 350:
+                agent.reforcar(10)
         time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
 
 # Iniciar thread do loop
