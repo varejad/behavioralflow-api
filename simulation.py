@@ -24,31 +24,27 @@ class Agents(Aprendente):
         self.color = color
         self.circle_color = "#ffffff"
     
+    def set_context(self):
+        context = ("sem contexto",)
+        return context
+
     # Executa as ações
-    def to_respond(self):
+    def to_respond(self, context):
         if self.passos_restantes == 0:
-            self.proxima_acao(("sem contexto",))
+            self.proxima_acao(context)
             self.passos_restantes = PASSOS_POR_SEGUNDO
 
         # Executa a ação atual
         if self._acao_atual[0] == "cima":
-            #dx, dy = self._direction_vector()
-            #self.positionX = (self.positionX + dx) % WIDTH
-            #self.positionY = (self.positionY + dy) % HEIGHT
             self.positionY = (self.positionY - 1) % HEIGHT
         
         elif self._acao_atual[0] == "baixo":
-            #dx, dy = self._direction_vector()
-            #self.positionX = (self.positionX - dx) % WIDTH
-            #self.positionY = (self.positionY - dy) % HEIGHT
             self.positionY = (self.positionY + 1) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
-            #self.angle = (self.angle - (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
             self.positionX = (self.positionX + 1) % WIDTH
         
         elif self._acao_atual[0] == "dir":
-            #self.angle = (self.angle + (math.pi / 2)/PASSOS_POR_SEGUNDO) % (2 * math.pi) # 90/PASSOS_POR_SEGUNDO para que ao final tenha feito o movimento apenas 1x
             self.positionX = (self.positionX - 1) % WIDTH
         
         elif self._acao_atual[0] == "parado":
@@ -87,7 +83,8 @@ agents = [
 def simular_em_loop():
     while True:
         for agent in agents:
-            agent.to_respond()
+            context = agent.set_context()
+            agent.to_respond(context)
         time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
 
 # Iniciar thread do loop
