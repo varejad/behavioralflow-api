@@ -33,6 +33,7 @@ class Agents(Aprendente):
     # Executa as ações
     def to_respond(self, context):
         if self.passos_restantes == 0:
+            self.circle_color = "#FFFFFF"
             self.proxima_acao(context)
             self.passos_restantes = PASSOS_POR_SEGUNDO
 
@@ -57,7 +58,6 @@ class Agents(Aprendente):
         self.passos_restantes -= 1
     
     def set_consequence(self):
-        self.circle_color = "#FFFFFF"
         # teste para reforçar quando entrar em um quadrado no meio da tela
         if 250 > self.previousPositionX > 350 and 150 > self.previousPositionY > 250 : # posição inicial fora
             if 150 <= self.positionY <= 250 and 250 <= self.positionX <= 350:
