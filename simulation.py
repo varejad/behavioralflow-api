@@ -15,7 +15,7 @@ responses = {("cima",):[3,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
-    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000"):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", previousPositionX=0, previousPositionY=0):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
@@ -23,6 +23,8 @@ class Agents(Aprendente):
         self.passos_restantes = 0
         self.color = color
         self.circle_color = "#ffffff"
+        self.previousPositionX = previousPositionX
+        self.previousPositionY = previousPositionY
     
     def set_context(self):
         context = (self.positionX, self.positionY)
@@ -56,8 +58,13 @@ class Agents(Aprendente):
     
     def set_consequence(self):
         # teste para reforçar quando estiver em um quadrado no meio da tela
-        if self.positionY >= 150 and self.positionY <= 250 and self.positionX >= 250 and self.positionX <= 350:
-            self.reforcar()
+        if 250 > self.previousPositionX > 350 and 150 > self.previousPositionY > 250 : # posição inicial fora
+            if 150 <= self.positionY <= 250 and 250 <= self.positionX <= 350:
+                self.reforcar()
+        
+        if 250 < self.previousPositionX < 350 and 150 < self.previousPositionY < 250 : # posição inicial dentro
+            if 150 >= self.positionY >= 250 and 250 >= self.positionX >= 350:
+                self.reforcar(-1)
 
     
     # Calcula a direção (.angle)
@@ -89,6 +96,8 @@ agents = [
 def simular_em_loop():
     while True:
         for agent in agents:
+            agent.previousPositionY = agent.positionY
+            agent.previousPositionX = agent.positionX
             context = agent.set_context()
             agent.to_respond(context)
             agent.set_consequence()
