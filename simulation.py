@@ -80,7 +80,8 @@ class Agents(Aprendente):
         if 250 <= self.previousPositionX <= 350 and 150 <= self.previousPositionY <= 250 : # posição inicial dentro
             if 150 > self.positionY > 250 and 250 > self.positionX > 350:
                 self.reforcar(-1)
-                self.circle_color = "#000000""""
+                self.circle_color = "#000000"
+                """
 
     
     # Calcula a direção (.angle)
