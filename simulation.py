@@ -58,6 +58,19 @@ class Agents(Aprendente):
         self.passos_restantes -= 1
     
     def set_consequence(self):
+        in_area_now = 150 <= self.positionY <= 250 and 250 <= self.positionX <= 350
+        in_area_before = 150 <= self.previousPositionY <= 250 and 250 <= self.previousPositionX <= 350
+
+        # Reforço: entrou na área
+        if not in_area_before and in_area_now:
+            self.reforcar()
+            self.circle_color = "#4af51f"
+
+        # Punição: saiu da área
+        if in_area_before and not in_area_now:
+            self.reforcar(-1)
+            self.circle_color = "#000000"
+        """
         # teste para reforçar quando entrar em um quadrado no meio da tela
         if 250 > self.previousPositionX > 350 and 150 > self.previousPositionY > 250 : # posição inicial fora
             if 150 <= self.positionY <= 250 and 250 <= self.positionX <= 350:
@@ -67,7 +80,7 @@ class Agents(Aprendente):
         if 250 <= self.previousPositionX <= 350 and 150 <= self.previousPositionY <= 250 : # posição inicial dentro
             if 150 > self.positionY > 250 and 250 > self.positionX > 350:
                 self.reforcar(-1)
-                self.circle_color = "#000000"
+                self.circle_color = "#000000""""
 
     
     # Calcula a direção (.angle)
