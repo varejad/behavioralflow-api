@@ -57,14 +57,17 @@ class Agents(Aprendente):
         self.passos_restantes -= 1
     
     def set_consequence(self):
-        # teste para reforçar quando estiver em um quadrado no meio da tela
+        self.circle_color = "#FFFFFF"
+        # teste para reforçar quando entrar em um quadrado no meio da tela
         if 250 > self.previousPositionX > 350 and 150 > self.previousPositionY > 250 : # posição inicial fora
             if 150 <= self.positionY <= 250 and 250 <= self.positionX <= 350:
                 self.reforcar()
-        
-        if 250 < self.previousPositionX < 350 and 150 < self.previousPositionY < 250 : # posição inicial dentro
-            if 150 >= self.positionY >= 250 and 250 >= self.positionX >= 350:
+                self.circle_color = "#4af51f"
+        # pune quando sair do quadrado
+        if 250 <= self.previousPositionX <= 350 and 150 <= self.previousPositionY <= 250 : # posição inicial dentro
+            if 150 > self.positionY > 250 and 250 > self.positionX > 350:
                 self.reforcar(-1)
+                self.circle_color = "#000000"
 
     
     # Calcula a direção (.angle)
