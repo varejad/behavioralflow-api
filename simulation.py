@@ -63,12 +63,12 @@ class Agents(Aprendente):
 
         # Reforço: entrou na área
         if not in_area_before and in_area_now:
-            self.reforcar()
+            self.reforcar(20)
             self.circle_color = "#4af51f"
 
         # Punição: saiu da área
         if in_area_before and not in_area_now:
-            self.reforcar(-1)
+            self.reforcar(-20)
             self.circle_color = "#000000"
         """
         # teste para reforçar quando entrar em um quadrado no meio da tela
