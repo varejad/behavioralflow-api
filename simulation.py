@@ -129,4 +129,4 @@ def get_states():
     #return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
 
 def get_learning():
-    return [agent._antecedentes_e_respostas for agent in agents]
+    return [{"Aprendizado":agent._antecedentes_e_respostas} for agent in agents]
