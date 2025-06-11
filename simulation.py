@@ -127,3 +127,6 @@ threading.Thread(target=simular_em_loop, daemon=True).start()
 def get_states():
     return [agent.to_dict() for agent in agents]
     #return[{"id": 1, "x": 50, "y": 50}, {"id": 2, "x": 150, "y": 50}]
+
+def get_learning():
+    return [agent._antecedentes_e_respostas for agent in agents]
