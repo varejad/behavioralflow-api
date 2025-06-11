@@ -20,5 +20,5 @@ def read_root():
     return {"message": "BehavioralFlow backend is running!"}
 
 @app.get("/learning")
-def get_learning():
+def get_learning_wrapper():
     return get_learning()

@@ -15,7 +15,7 @@ responses = {("cima",):[3,6],
              ("parado",):[0,3]}
 
 class Agents(Aprendente):
-    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", previousPositionX=0, previousPositionY=0):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000"):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
@@ -23,8 +23,8 @@ class Agents(Aprendente):
         self.passos_restantes = 0
         self.color = color
         self.circle_color = "#ffffff"
-        self.previousPositionX = previousPositionX
-        self.previousPositionY = previousPositionY
+        self.previousPositionX = positionX
+        self.previousPositionY = positionY
     
     def set_context(self):
         context = (self.positionX, self.positionY)
@@ -82,14 +82,6 @@ class Agents(Aprendente):
                 self.reforcar(-1)
                 self.circle_color = "#000000"
                 """
-
-    
-    # Calcula a direção (.angle)
-    """def _direction_vector(self):
-        # Retorna o vetor unitário da direção baseada no ângulo (em radianos)
-        dx = round(math.cos(self.angle))
-        dy = round(-math.sin(self.angle))  # y invertido para "cima"
-        return dx, dy"""
 
     # Facilita transformar as informações em dicionário para passar para get_statess()
     def to_dict(self):
