@@ -8,11 +8,11 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 600
 HEIGHT = 400
 
-responses = {("cima",):[3,6],
-             ("baixo",):[3,6],
-             ("esq",):[3,6],
-             ("dir",):[3,6],
-             ("parado",):[0,3]}
+responses = {("cima",):[0,6],
+             ("baixo",):[0,6],
+             ("esq",):[0,6],
+             ("dir",):[0,6],
+             ("parado",):[0,6]}
 
 class Agents(Aprendente):
     def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000"):
@@ -45,10 +45,10 @@ class Agents(Aprendente):
             self.positionY = (self.positionY + 1) % HEIGHT
         
         elif self._acao_atual[0] == "esq":
-            self.positionX = (self.positionX + 1) % WIDTH
+            self.positionX = (self.positionX - 1) % WIDTH
         
         elif self._acao_atual[0] == "dir":
-            self.positionX = (self.positionX - 1) % WIDTH
+            self.positionX = (self.positionX + 1) % WIDTH
         
         elif self._acao_atual[0] == "parado":
             self.positionX += 0
